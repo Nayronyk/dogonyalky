@@ -1,12 +1,14 @@
 import pygame
 
+WIDTH = 1000
+HEIGHT = 600
 
-window = pygame.display.set_mode((1000, 600))
+window = pygame.display.set_mode((WIDTH,HEIGHT))
 background = pygame.image.load("background.png")
 
 background = pygame.transform.scale(
                                 pygame.image.load("background.png"),
-                                (1000,600)
+                                (WIDTH,HEIGHT)
             )
 
 clock = pygame.time.Clock()
@@ -30,6 +32,16 @@ sprite1_rect = pygame.Rect((x1,y1), (120,110))
 sprite2_rect = pygame.Rect((x2,y2), (120,110))
 
 
+def fade():
+        fade_image = pygame.image.load("victory.png").convert()
+        fade_image = pygame.transform.scale(fade_image, (WIDTH, HEIGHT))
+        
+        for alpha in range(0, 255, 5):
+            fade_image.set_alpha(alpha)
+            window.blit(fade_image, (0, 0))
+            pygame.display.update()
+            pygame.time.delay(30)
+
 game = True
 while game:
     for event in pygame.event.get():
@@ -49,8 +61,9 @@ while game:
     sprite2_rect.y = y2
 
     if sprite1_rect.colliderect(sprite2_rect):
+        fade()
         print("collied")
-
+        game = False
 
 
 
